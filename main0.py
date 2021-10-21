@@ -10,31 +10,28 @@ import pandas as pd
 import numpy as np
 import os
 
-Memes = ['https://drive.google.com/file/d/16I6-Q4zpgbvRY9m3s4OqF3JcjSudBD-m/view?usp=sharing',
-         'https://drive.google.com/file/d/1dGAkJcjjYAWrLizmRSz4sjflxUa4h8LY/view?usp=sharing',
-         'https://drive.google.com/file/d/1R2ynD71DVymDYKbv9vfE7mx3M14dRS4g/view?usp=sharing',
-         'https://drive.google.com/file/d/19ZBP1-CUFf38DuQ7BwtMzmAyf2h8FAXh/view?usp=sharing',
-         'https://drive.google.com/file/d/1xJYn5knfx-Lp5ncXViXfP1UPP1daSmbX/view?usp=sharing',
-         'https://drive.google.com/file/d/1LCtMf1OiIB8kvjRjofUznBmuMhWWNcOB/view?usp=sharing',
-         'https://drive.google.com/file/d/191Q3wQR_LVkYd9LUGfOCIiH4d1ofnaxh/view?usp=sharing',
-         'https://drive.google.com/file/d/1iD6vXqLZxJY64L6e846fKlEC9YekztPR/view?usp=sharing',
-         'https://drive.google.com/file/d/1Mz5776LM95GD8DRdFQAVcFszvQ_mO10t/view?usp=sharing',
-         'https://drive.google.com/file/d/10BetU6QKDC5tOwkVikPd5_EIzl2opPwr/view?usp=sharing',
-         'https://drive.google.com/file/d/17UBRefMwZRgXgipEIaXgUl0ZFYP29GLD/view?usp=sharing',
-         'https://drive.google.com/file/d/1DKz-apMshVhYU_vGwCs0ip0XjJSK6PSz/view?usp=sharing',
-         'https://drive.google.com/file/d/1tBvewivJwUzlyXJBlPPlqqbgDrz2MqfL/view?usp=sharing',
-         'https://drive.google.com/file/d/1lr8tMjGzAOm8VZyjk5JzPjs8ilj3Wohz/view?usp=sharing',
-         'https://drive.google.com/file/d/1uODPV7z_OYkuSyqpsbT0myINuW5d4P_B/view?usp=sharing',
-         'https://drive.google.com/file/d/1iy2iClqzwzRkIIa5QuX1wF8ymmVb9qQW/view?usp=sharing',
-         'https://drive.google.com/file/d/187A8u4zIl2iGJTV3bB-boSUSlRPUMQt_/view?usp=sharing',
-         'https://drive.google.com/file/d/187A8u4zIl2iGJTV3bB-boSUSlRPUMQt_/view?usp=sharing']
+Memes = ['https://docs.google.com/uc?id=16I6-Q4zpgbvRY9m3s4OqF3JcjSudBD-m',
+         'https://docs.google.com/uc?id=1dGAkJcjjYAWrLizmRSz4sjflxUa4h8LY',
+         'https://docs.google.com/uc?id=1R2ynD71DVymDYKbv9vfE7mx3M14dRS4g',
+         'https://docs.google.com/uc?id=19ZBP1-CUFf38DuQ7BwtMzmAyf2h8FAXh',
+         'https://docs.google.com/uc?id=1xJYn5knfx-Lp5ncXViXfP1UPP1daSmbX',
+         'https://docs.google.com/uc?id=1LCtMf1OiIB8kvjRjofUznBmuMhWWNcOB',
+         'https://docs.google.com/uc?id=191Q3wQR_LVkYd9LUGfOCIiH4d1ofnaxh',
+         'https://docs.google.com/uc?id=1iD6vXqLZxJY64L6e846fKlEC9YekztPR',
+         'https://docs.google.com/uc?id=1Mz5776LM95GD8DRdFQAVcFszvQ_mO10t',
+         'https://docs.google.com/uc?id=10BetU6QKDC5tOwkVikPd5_EIzl2opPwr',
+         'https://docs.google.com/uc?id=17UBRefMwZRgXgipEIaXgUl0ZFYP29GLD',
+         'https://docs.google.com/uc?id=1DKz-apMshVhYU_vGwCs0ip0XjJSK6PSz',
+         'https://docs.google.com/uc?id=1tBvewivJwUzlyXJBlPPlqqbgDrz2MqfL',
+         'https://docs.google.com/uc?id=1lr8tMjGzAOm8VZyjk5JzPjs8ilj3Wohz',
+         'https://docs.google.com/uc?id=1uODPV7z_OYkuSyqpsbT0myINuW5d4P_B',
+         'https://docs.google.com/uc?id=1iy2iClqzwzRkIIa5QuX1wF8ymmVb9qQW',
+         'https://docs.google.com/uc?id=187A8u4zIl2iGJTV3bB-boSUSlRPUMQt_',
+         'https://docs.google.com/uc?id=187A8u4zIl2iGJTV3bB-boSUSlRPUMQt_']
 
 # подключим токен нашего бота
 bot = telebot.TeleBot("2040151040:AAHSHitrniotBjMTm7lCEhq5x25k0nwtZgQ")
 token = "2040151040:AAHSHitrniotBjMTm7lCEhq5x25k0nwtZgQ"
-
-
-# 2040151040:AAHSHitrniotBjMTm7lCEhq5x25k0nwtZgQ             ОСНОВНОЙ БОТ
 
 # Напишем функцию для старта:
 @bot.message_handler(commands=['start'])
@@ -209,10 +206,6 @@ def integral(info):
         try:
             # Отправляем фото пользователю
             bot.send_photo(info.chat.id, photo=open(f"photo_{info.chat.id}.png", 'rb'))
-            # Удаляет фотку - иначе он долго тупит!!!!
-            path = os.path.join(os.path.abspath(os.path.dirname(__file__)), f"photo_{info.chat.id}.png")
-            os.remove(path)
-            send_keyboard(info, 'Порешаем еще?')
         except:
             bot.send_message(info.chat.id, 'К сожалению, мы не смогли отправить Вам ответ, '
                                            'так как у нас возникли неполадки, но мы уже работаем над этим!')
@@ -396,7 +389,6 @@ def tinv(message):
             bot.send_photo(message.chat.id, get(f'{Memes[i]}').content)
     else:
         bot.send_message(message.chat.id, f'Мы работаем над этой функцией\n Ваша матрица: \n {message.text}')
-
     send_keyboard(message, 'Выбирай раздел')
 
 
@@ -426,7 +418,6 @@ def msum(message):
             bot.send_photo(message.chat.id, get(f'{Memes[i]}').content)
     else:
         bot.send_message(message.chat.id, f'Мы работаем над этой функцией\n Ваша матрица: \n {message.text}')
-
     send_keyboard(message, 'Выбирай раздел')
 
 
@@ -457,7 +448,6 @@ def mdif(message):
             bot.send_photo(message.chat.id, get(f'{Memes[i]}').content)
     else:
         bot.send_message(message.chat.id, f'Мы работаем над этой функцией\n Ваша матрица: \n {message.text}')
-
     send_keyboard(message, 'Выбирай раздел')
 
 
@@ -487,7 +477,6 @@ def mmul(message):
             bot.send_photo(message.chat.id, get(f'{Memes[i]}').content)
     else:
         bot.send_message(message.chat.id, f'Мы работаем над этой функцией\n Ваша матрица: \n {message.text}')
-
     send_keyboard(message, 'Выбирай раздел')
 
 # отрисовка графиков
@@ -545,24 +534,19 @@ def plot_graph(data, id):
 
 def func_spravka(message):
     if message.text == 'Таблица производных':
-        bot.send_photo(message.chat.id, get('https://drive.google.com/file/d/1tRpWTHF2ZK06'
-                                            'r3YY5BwUEOi6p0Mwx5l9/view?usp=sharing').content)
+        bot.send_photo(message.chat.id, 'https://docs.google.com/uc?id=1tRpWTHF2ZK06r3YY5BwUEOi6p0Mwx5l9')
         send_keyboard(message, 'Выбирай раздел')
     elif message.text == 'Интегралы':
-        bot.send_photo(message.chat.id, get('https://drive.google.com/file/d/1x-9XZ'
-                                            'EwpIkKdUtcWKGt3fkdL39koDd8s/view?usp=sharing').content)
+        bot.send_photo(message.chat.id, 'https://docs.google.com/uc?id=1x-9XZEwpIkKdUtcWKGt3fkdL39koDd8s')
         send_keyboard(message, 'Выбирай раздел')
     elif message.text == 'Свойства логарифмов':
-        bot.send_photo(message.chat.id, get('https://drive.google.com/file/d/1nQBFrt4h3yF8mrqLN0-mQ9Mdi8MNMqxR/view'
-                                            '?usp=sharing').content)
+        bot.send_photo(message.chat.id, 'https://docs.google.com/uc?id=1nQBFrt4h3yF8mrqLN0-mQ9Mdi8MNMqxR')
         send_keyboard(message, 'Выбирай раздел')
     elif message.text == 'Тригонометрия':
-        bot.send_photo(message.chat.id, get('https://drive.google.com/file/d/1VN_2pBQfiPXO1J0MHiFlb9RqXhEymwpC'
-                                            '/view?usp=sharing').content)
+        bot.send_photo(message.chat.id, 'https://docs.google.com/uc?id=1VN_2pBQfiPXO1J0MHiFlb9RqXhEymwpC')
         send_keyboard(message, 'Выбирай раздел')
     elif message.text == 'Свойства еще чего-нибудь':
-        bot.send_photo(message.chat.id, get('https://drive.google.com/file/d/1Kw9t8be9q0vootydiHhg2Ed75Dbq4YpD/view?u'
-                                            'sp=sharing').content)
+        bot.send_photo(message.chat.id, 'https://docs.google.com/uc?id=1Kw9t8be9q0vootydiHhg2Ed75Dbq4YpD')
         send_keyboard(message, 'Выбирай раздел')
     elif message.text == 'Мемы)))':
         i = random.randint(0, 17)
