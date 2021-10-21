@@ -5,7 +5,6 @@ import telebot
 from telebot import types
 from sympy import *
 from itertools import combinations_with_replacement as cwr
-from itertools import groupby as gr
 from requests import get
 import pandas as pd
 import numpy as np
@@ -31,8 +30,8 @@ Memes = ['https://drive.google.com/file/d/16I6-Q4zpgbvRY9m3s4OqF3JcjSudBD-m/view
          'https://drive.google.com/file/d/187A8u4zIl2iGJTV3bB-boSUSlRPUMQt_/view?usp=sharing']
 
 # подключим токен нашего бота
-bot = telebot.TeleBot("2065541775:AAG6GkNWUUw_WX06H4lcUpCKdd2slF4wm9Y")
-token = "2065541775:AAG6GkNWUUw_WX06H4lcUpCKdd2slF4wm9Y"
+bot = telebot.TeleBot("2040151040:AAHSHitrniotBjMTm7lCEhq5x25k0nwtZgQ")
+token = "2040151040:AAHSHitrniotBjMTm7lCEhq5x25k0nwtZgQ"
 
 
 # 2040151040:AAHSHitrniotBjMTm7lCEhq5x25k0nwtZgQ             ОСНОВНОЙ БОТ
@@ -45,11 +44,10 @@ def send_keyboard(message, text="Привет, Добрый человек! Ес
     keyboard = types.ReplyKeyboardMarkup(row_width=1)
     it_1 = types.KeyboardButton("Матан")
     it_2 = types.KeyboardButton("Линал")
-    it_3 = types.KeyboardButton("Алгебра")
     it_4 = types.KeyboardButton("Построение графиков")
     it_5 = types.KeyboardButton("Справочные материалы")
     it_6 = types.KeyboardButton("Информация")
-    keyboard.add(it_1, it_2, it_3, it_4, it_5, it_6)
+    keyboard.add(it_1, it_2, it_4, it_5, it_6)
     answer = bot.send_message(message.chat.id, text=text, reply_markup=keyboard)
     bot.register_next_step_handler(answer, choose_section)
 
@@ -97,17 +95,6 @@ def choose_section(answer):
         answer = bot.send_message(answer.chat.id, "Выберите раздел Линала", reply_markup=keyboard)
         bot.register_next_step_handler(answer, func_linal)
     #     func_linal - обрабатыввает функции линала!
-
-    elif answer.text == "Алгебра":
-        # Создаем клавиатуру
-        keyboard = types.ReplyKeyboardMarkup()
-        it_1 = types.KeyboardButton("Уравнение")
-        it_5 = types.KeyboardButton("Главное меню")
-        keyboard.add(it_1, it_5)
-        # Присылаем ее пользователю с просбой выбора
-        answer = bot.send_message(answer.chat.id, "Выберите, что посчитать", reply_markup=keyboard)
-        bot.register_next_step_handler(answer, func_algebra)
-    #     func_algebra - обрабатыввает функции линала! Яна - это твой раздел)
 
     elif answer.text == "Построение графиков":
         # Создаем клавиатуру
@@ -503,84 +490,7 @@ def mmul(message):
 
     send_keyboard(message, 'Выбирай раздел')
 
-
-def func_algebra(message):
-    if message.text == 'Уравнение':
-        f = bot.send_message(message.chat.id, 'Введите уравнение(я); каждое последующее на новой строке '
-                                              '\nЗакончите пустой строкой '
-                                              '\nДалее введите переменную(ые); каждую последующую на новой строке '
-                                              '\nЗакончите пустой строкой '
-                                              '\nНапример: \nx**2+x+1 \ny*2+1 \n\nx\ny \n'
-                                              '\nОбратите внимание, что всё нужно прислать одним сообщением!')
-        bot.register_next_step_handler(f, resolve_eq_mult)
-    elif message.text == 'Главное меню':
-        send_keyboard(message, 'Порешаем еще?')
-    else:
-        msg = bot.send_message(message.chat.id, 'Я не понимаю(((')
-        send_keyboard(msg, 'Выберите раздел')
-
-    # elif message.text == 'Неравенство':
-    #     f = bot.send_message(message.chat.id, 'Введите неравенство(а); каждое последующее на новой строке '
-    #                                           '\nЗакончите пустой строкой '
-    #                                           '\nДалее введите переменную(ые); каждую последующую на новой строке '
-    #                                           '\nЗакончите пустой строкой '
-    #                                           '\nНапример: \nx+1>1 \ny>0 \n\nx\ny \n'
-    #                                           '\nОбратите внимание, что всё нужно прислать одним сообщением!')
-    #     bot.register_next_step_handler(f.text, resolve_eq_mult)
-
-    # elif message.text == 'Упростить':
-    #     f = bot.send_message(message.chat.id, 'Введите выражение(я); каждое последующее на новой строке '
-    #                                           '\nЗакончите пустой строкой '
-    #                                           '\nДалее введите переменную(ые); каждую последующую на новой строке '
-    #                                           '\nЗакончите пустой строкой '
-    #                                           '\nНапример: \n(x**2-1)/(x+1) \n(2*x+y**2)/x>0 \n\nx\ny \n'
-    #                                           '\nОбратите внимание, что всё нужно прислать одним сообщением!')
-
-
-def resolve_eq_mult(info):
-    calculations = resolve_eq_mult_calc(info.text)
-    if calculations == 0:
-        send_keyboard(info, 'Данные введены неверно, я не понимаю :(')
-    else:
-        # Делаем фото и сохраняем его:
-        photo('\n'.join(calculations), info.chat.id)
-        try:
-            # Отправляем фото пользователю:
-            bot.send_photo(info.chat.id, photo=open(f"photo_{info.chat.id}.png", 'rb'))
-
-            # Удаляем фото, иначе долгое ожидание и торможение:
-            path = os.path.join(os.path.abspath(os.path.dirname(__file__)), f"photo_{info.chat.id}.png")
-            os.remove(path)
-            send_keyboard(info, 'Порешаем еще?')
-        except:
-            bot.send_message(info.chat.id, 'К сожалению, мы не смогли отправить Вам ответ, '
-                                           'так как у нас возникли неполадки, но мы уже работаем над этим!')
-
-        # Удаляем фото из сохраненного, чтобы не забивать память:
-        path = os.path.join(os.path.abspath(os.path.dirname(__file__)), f"photo_{info.chat.id}.png")
-        os.remove(path)
-        send_keyboard(info, 'Порешаем еще?')
-
-
-def resolve_eq_mult_calc(data):
-    try:
-        data = data.replace(" ", '')  # убираем лишние пробелы
-        eqq = data.split('_')  # превращаем в список
-
-        variable = [symbols(el) for el in eqq[1].split(',')]  # list
-        equation = [sympify(el) for el in eqq[0].split(',')]  # list
-
-        if len(equation) == len(variable) == 1:
-            sol = f"${variable[0]} = {solve(equation[0], variable[0])} $"
-        else:
-            sol = f"${sympify(tuple(variable))} = {latex(nonlinsolve(sympify(equation), sympify(variable)))} $"
-    except:
-        sol = 0
-    return sol
-
-
 # отрисовка графиков
-
 def func_graph(message):
     if message.text == 'По функции':
         f = bot.send_message(message.chat.id, 'Введите вашу функцию и переменные через пробел:\n'
