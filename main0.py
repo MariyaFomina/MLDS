@@ -30,8 +30,8 @@ Memes = ['https://docs.google.com/uc?id=16I6-Q4zpgbvRY9m3s4OqF3JcjSudBD-m',
          'https://docs.google.com/uc?id=187A8u4zIl2iGJTV3bB-boSUSlRPUMQt_']
 
 # подключим токен нашего бота
-bot = telebot.TeleBot("2040151040:AAHSHitrniotBjMTm7lCEhq5x25k0nwtZgQ")
-token = "2040151040:AAHSHitrniotBjMTm7lCEhq5x25k0nwtZgQ"
+bot = telebot.TeleBot("Наш токен")
+token = "Наш токен"
 
 # Напишем функцию для старта:
 @bot.message_handler(commands=['start'])
